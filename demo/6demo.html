@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>10 demo</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <!-- 动态组件 -->
+        <div id="app">
+                <button @click="changeheader(1)">第一项</button>
+                <button @click="changeheader(2)">第二项</button>
+                <button @click="changeheader(3)">第三项</button>
+                <!-- 这里的标签随机 -->
+                <keep-alive>
+                    <!-- 这里的keepalive是状态保持 -->
+                        <compontent :is="nowHeader"></compontent>
+                </keep-alive>
+                
+            </div>
+            <script>
+                var vm=new Vue({
+                    el:"#app",
+                    data:{
+                        nowHeader:'my-header-1'
+                    },
+                    components:{
+                        'my-header-1':{
+                            template:'<div>组件1<input type="text"></div>'
+                        },
+                        'my-header-2':{
+                            template:'<div>组件2<input type="text"></div>'
+                        },
+                        'my-header-3':{
+                            template:'<div>组件3<input type="text"></div>'
+                        }
+                    },
+                    methods:{
+                        changeheader:function(num){
+                            this.nowHeader='my-header-'+num
+                        }
+                    }
+                })
+            </script>
+    
+</body>
+</html>

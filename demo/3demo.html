@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+<!-- 非父子组件demo2 -->
+
+<body>
+    <!-- 方案1，把具体的逻辑全都放在了父组件里，不推荐 -->
+    <div id="app">
+        <div>{{count}}</div>
+        <my-addbtn :count="count"></my-addbtn>
+        <my-removebtn :count="count"></my-removebtn>
+    </div>
+
+    <script>
+        var busVm=new Vue();
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                count: 0
+            },
+            mounted:function(){
+                let self=this;
+                busVm.$on("removeone",function(){
+                    self.count--;
+                });
+                busVm.$on("addone",function(){
+                    self.count++;
+                });
+            },
+            
+        
+            components: {
+                'my-addbtn': {
+                    template: '<button @click="add">+</button>',
+                    props: ['count'],
+                    methods:{
+                        add:function(){
+                            busVm.$emit("addone")
+                        }
+                    }
+                },
+                'my-removebtn': {
+                    template: '<button @click="remove">-</button>',
+                    props:['count'],
+                    methods:{
+                        remove:function(){
+                            busVm.$emit("removeone")
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+
+<!-- 方案2.把具体的逻辑放在子组件里，降低耦合度，推荐 -->
+<div id="app2">
+        <div>{{count2}}</div>
+        <my-addbtn2 :count2="count2"></my-addbtn2>
+        <my-removebtn2 :count2="count2"></my-removebtn2>
+    </div>
+
+    <script>
+        var busVm2=new Vue();
+        var vm2 = new Vue({
+            el: "#app2",
+            data: {
+                count2: 0
+            },
+            mounted:function(){
+                let self=this;
+                busVm2.$on("changeNumber",function(str){
+                    self.count2=str;
+                });
+            },
+           
+            components: {
+                'my-addbtn2': {
+                    template: '<button @click="add2">+</button>',
+                    props: ['count2'],
+                    methods:{
+                        add2:function(){
+                            busVm2.$emit("changeNumber",this.countadd())
+                        },
+                        countadd:function(){
+                            // 具体的逻辑写在这里
+                            let nowcount=this.count2+1;
+                            return nowcount
+                        }
+                    }
+                },
+                'my-removebtn2': {
+                    template: '<button @click="remove2">-</button>',
+                    props:['count2'],
+                    methods:{
+                        remove2:function(){
+                            busVm2.$emit("changeNumber",this.count2-1)
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

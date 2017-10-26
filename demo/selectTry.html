@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="demo">
+        <select v-on:click="refreshData" @change="moreData" v-model="indexId">
+            <option v-for="(item,index) in options" :value="index" v-on:click=>{{item.name}}</option>
+        </select>
+    </div>
+
+    <script>
+        let demo = new Vue({
+            el: "#demo",
+            data: {
+                indexId: "",
+                options: [{
+                    "indexId": 1,
+                    "name": "1"
+                }, {
+                    "indexId": 2,
+                    "name": "2"
+                }, {
+                    "indexId": 3,
+                    "name": "3"
+                }, {
+                    "indexId": 4,
+                    "name": "4"
+                }],
+                moreOptions: { "indexId": 999, "name": "加载更多数据" },
+                newOptions:[]
+            },
+            computed:{},
+            created: function () {
+                // let moreOptions="加载更多数据";
+                if (this.options.length > 3) {
+                    this.newOptions=this.options;
+                    this.options = this.newOptions.slice(0, 3);
+                    this.options.push(this.moreOptions)
+                }
+            },
+            mounted: function () {
+                // for (let i = 0; i < this.options.length; i++) {
+                //     if (this.options[i] == "加载更多数据") {
+                //         let xx = document.getElementsByTagName("option");
+                //         let lastOne = xx[5];
+                //     }
+                // }
+            },
+            methods: {
+                dropMore: function () {
+                    
+                },
+                moreData: function () {
+                    // 一个method中，data中的同一个属性只能更改一次。
+                    if (this.indexId == 3) {
+                        let nnewOptions=this.options.slice(0,3);
+                        let ll=this.newOptions.length;
+                        let shengyu=this.newOptions.slice(3,ll);
+                        let lastOption=nnewOptions.concat(shengyu);
+                        this.options=lastOption;
+                      
+                    }
+                },
+                refreshData:function(){
+                    // this.$nextTick(function(){
+                    //      this.options=this.newOptions;
+                    // })
+                   
+                }
+            }
+        })
+    </script>
+
+    
+</body>
+
+</html>

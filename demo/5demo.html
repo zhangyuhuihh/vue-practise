@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>9 demo</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <!-- 内容分发demo -->
+    <!-- 为了让组件可以组合，我们需要一种方式来混合父组件的内容与子组件自己的模板，这个过程称为内容分发 -->
+    <!-- <div id="app">
+        <my-header>
+            <h2>我是标题</h2>
+        </my-header>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            components:{
+                'my-header':{
+                    template:'<div>我是头部:<slot></slot></div>'
+                }
+            }
+        })
+    </script> -->
+
+
+    <!-- 单slot标签 -->
+    <!-- <div id="app">
+            <my-header>
+                    <my-title></my-title>
+            </my-header>
+            
+        </div>
+        <script>
+            var vm=new Vue({
+                el:"#app",
+                components:{
+                    'my-header':{
+                        template:'<div>我是头部<slot></slot></div>'
+                    },
+                    'my-title':{
+                        template:'<div>我是标题</div>'
+                    }
+                }
+            })
+        </script> -->
+
+
+        <!-- 多slot标签 -->
+        <div id="app">
+                <my-header>
+                    <button slot="left">←</button>
+                    <button slot="right">→</button>
+                </my-header>
+                
+            </div>
+            <script>
+                var vm=new Vue({
+                    el:"#app",
+                    components:{
+                        'my-header':{
+                            template:'<div><slot name="left"></slot>我是头部<slot name="right"></slot></div>'
+                        },
+                        'my-title':{
+                            template:'<div>我是标题</div>'
+                        }
+                    }
+                })
+            </script>
+    
+</body>
+</html>

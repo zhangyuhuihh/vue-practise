@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-header :list="list"></my-header>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list: ['第一项', '第二项', '第三项'],
+                message:'hello app'
+            },
+            components: {
+                'my-header': {
+                    template: '<div><h2 ref="myTitle">{{newMessage}}</h2><ul><li v-for="item in list">{{item}}</li></ul><my-nav @changeEvents="getChildContent" :list="list"></my-nav></div>',
+                    // data: function () {
+                    //     return {
+                    //         message: 'hello myHeader!!!',
+                    //     }
+                    // },
+                    props:{
+                        'list':{
+                            type:Array,
+                            default:['第一项11', '第二项22', '第三项33']//默认值
+                        },
+                        'message':{
+
+                        }
+                    },//父组件向子组件通信props
+                    data:function(){
+                        return newMessage=this.message;//新建data以存储父组件传过来的message
+                    },
+                    methods:{
+                        getChildContent:function(str){
+                            // console.log(str)
+                            // this.message=str;  this.newMessage=str  //数据操作,这里不能改变message的值，因为message是父组件传过来的，这里改了，万一父组件改了，这里也会变，就会多次修改。
+                            this.$refs.myTitle.innerHTML=str;//通过DOM操作，数据不好修改的情况下
+                        }
+                    },
+                    components:{
+                        'my-nav':{
+                            template:'<ul><li @click="getContent" v-for="item in list">{{item}}</li></ul>',
+                            props:['list'],
+                            methods:{
+                                getContent:function(e){
+                                    // console.log(this)
+                                    // console.log(e.target.innerHTML)
+                                    this.$emit('changeEvents',e.target.innerHTML)//子组件向父组件传递参数，只能传一层
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    </Script>
+</body>
+
+</html>

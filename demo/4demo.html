@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>8 demo</title>
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+</head>
+
+<body>
+    <!--vuex应用demo -->
+    <div id="app">
+        <div>{{count}}</div>
+        <my-addbtn></my-addbtn>
+        <my-removebtn></my-removebtn>
+    </div>
+
+    <script>
+        var store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            mutations: {
+                add: function (state) {
+                    state.count++
+                },
+                remove: function (state) {
+                    state.count--
+                }
+            }
+        });
+        var vm = new Vue({
+            el: "#app",
+            computed: {
+                count: function () {
+                    // 获取外面的实例count
+                    return store.state.count
+                }
+            },
+            components: {
+                'my-addbtn': {
+                    template: '<button @click="add">+</button>',
+                    methods: {
+                        add: function () {
+                            store.commit("add")
+                        }
+                    }
+                },
+                'my-removebtn': {
+                    template: '<button @click="remove">-</button>',
+                    methods: {
+                        remove: function () {
+                            store.commit("remove")
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
