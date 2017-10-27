@@ -1,20 +1,20 @@
-// var cc=function(){
-// return {xx:2}}
-// var ff=function(){
-// return {xx:2}}
-// var dd=cc();
-// var gg=ff()
-// console.log(gg==dd)
-// var cc=2;
-// var ff=2;
-// console.log(cc===ff)
+var cc=function(){
+return {xx:2}}
+var ff=function(){
+return {xx:2}}
+var dd=cc();
+var gg=ff()
+console.log(gg==dd)
+var cc=2;
+var ff=2;
+console.log(cc===ff)
 
-// var dd=[1,2,3,4,5,6,7,8];
-// var cc=dd.splice(1,3);
-// console.log(cc)
-// console.log(dd)
+var dd=[1,2,3,4,5,6,7,8];
+var cc=dd.splice(1,3);
+console.log(cc)
+console.log(dd)
 
-// call应用
+// call应用-----------------------------------------------------------------------------------
 function cat (){
 }
 cat.prototype={
@@ -32,6 +32,8 @@ var whitedog={
 //say方法的this对象改变了，改为了call里面的对象，不然原来这里的say方法的this对象应该是blackcat
 blackcat.say.call(whitedog)
 
+
+// 闭包应用----------------------------------------------------------------------------------
 
 function a(){
     var i=0;
